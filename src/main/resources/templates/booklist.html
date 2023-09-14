@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Bookstore</title>
+</head>
+
+<body>
+	<table class="table table-striped">
+		<tr>
+			<th>Title</th>
+			<th>Author</th>
+			<th>Year published</th>
+			<th>ISBN</th>
+			<th>Price</th>
+		</tr>
+		<tr th:each="book : ${books}">
+			<td th:text="${book.title}"></td>
+			<td th:text="${book.author}"></td>
+			<td th:text="${book.pubYear}"></td>
+			<td th:text="${book.isbn}"></td>
+			<td th:text="${book.price}"></td>
+			<td>
+				<a th:href="@{/edit/{id}(id=${book.id})}">Edit</a>
+
+			</td>
+			<td>
+				<a th:href="@{/delete/{id}(id=${book.id})}" class="btn btn-danger">Delete</a>
+			</td>
+		</tr>
+	</table>
+
+	<br>
+	<a href="/addbook" class="btn btn-success">Add Book</a>
+</body>
+
+</html>
