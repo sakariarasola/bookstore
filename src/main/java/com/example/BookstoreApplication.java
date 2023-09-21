@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Bean;
 
 import com.example.domain.Book;
 import com.example.domain.BookRepository;
+import com.example.domain.Category;
+import com.example.domain.CategoryRepository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +21,7 @@ public class BookstoreApplication {
 		SpringApplication.run(BookstoreApplication.class, args);
 	}
 
-	@Bean
+	@Bean(name = "bookCommandLineRunner")
 	public CommandLineRunner demo(BookRepository repository) {
 		return (args) -> {
 			repository.save(new Book("testi", "test", 1997, 1928, 44));
@@ -31,5 +33,19 @@ public class BookstoreApplication {
 			}
 		};
 
+	}
+
+	@Bean(name = "categoryCommandLineRunner")
+	public CommandLineRunner demo(CategoryRepository repository) {
+		return (args) -> {
+			repository.save(new Category("Scifi"));
+			repository.save(new Category("Action"));
+			repository.save(new Category("Horror"));
+
+			log.info("fetch * categories");
+			for (Category category : repository.findAll()) {
+				log.info(category.toString());
+			}
+		};
 	}
 }

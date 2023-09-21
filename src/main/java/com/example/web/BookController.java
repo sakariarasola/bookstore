@@ -7,15 +7,23 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.domain.Book;
 import com.example.domain.BookRepository;
+import com.example.domain.CategoryRepository;
 
 @Controller
 public class BookController {
 	@Autowired
 	private BookRepository repository;
+
+	@Autowired
+	private CategoryRepository crepository;
+
+	public BookController(BookRepository repository, CategoryRepository crepository) {
+		this.repository = repository;
+		this.crepository = crepository;
+	}
 
 	@RequestMapping(value = { "booklist" })
 	public String bookList(Model model) {
@@ -26,6 +34,7 @@ public class BookController {
 	@GetMapping(value = { "addbook" })
 	public String addBook(Model model) {
 		model.addAttribute("book", new Book());
+		model.addAttribute("categories", crepository.findAll());
 		return "addbook";
 	}
 
@@ -42,8 +51,9 @@ public class BookController {
 	}
 
 	@RequestMapping(value = "/edit/{id}")
-	public String showEditBook(@PathVariable("id") Long id, Model model){model.addAttribute("book", repository.findById(id));
-	model.addAttribute("departments", repository.findAll());
-	return "editbook";
+	public String showEditBook(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("book", repository.findById(id));
+		model.addAttribute("categories", crepository.findAll());
+		return "editbook";
 	}
 }
