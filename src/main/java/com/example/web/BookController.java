@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,6 +36,11 @@ public class BookController {
 		return "booklist";
 	}
 
+	@RequestMapping(value = { "login" })
+	public String login(Model model) {
+		return "redirect:booklist";
+	}
+
 	@GetMapping(value = { "books" })
 	public @ResponseBody List<Book> bookListRest() {
 		return (List<Book>) repository.findAll();
@@ -45,6 +51,7 @@ public class BookController {
 		return repository.findById(bookId);
 	}
 
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@GetMapping(value = { "addbook" })
 	public String addBook(Model model) {
 		model.addAttribute("book", new Book());
@@ -58,12 +65,14 @@ public class BookController {
 		return "redirect:booklist";
 	}
 
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@GetMapping(value = "/delete/{id}")
 	public String deleteStudent(@PathVariable("id") Long id, Model model) {
 		repository.deleteById(id);
 		return "redirect:../booklist";
 	}
 
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = "/edit/{id}")
 	public String showEditBook(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("book", repository.findById(id));
