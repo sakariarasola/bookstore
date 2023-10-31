@@ -6,16 +6,18 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
 
 @Entity
 public class Book {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "book_seq")
+    @SequenceGenerator(name = "book_seq", sequenceName = "book_seq", allocationSize = 1)
 	private long id;
 	private String title;
 	private String author;
-	private long pubYear;
+	private long pyear;
 	private long isbn;
 	private int price;
 
@@ -35,10 +37,10 @@ public class Book {
 
 	}
 
-	public Book(String title, String author, long pubYear, long isbn, int price) {
+	public Book(String title, String author, long pyear, long isbn, int price) {
 		this.title = title;
 		this.author = author;
-		this.pubYear = pubYear;
+		this.pyear = pyear;
 		this.isbn = isbn;
 		this.price = price;
 	}
@@ -67,12 +69,12 @@ public class Book {
 		this.author = author;
 	}
 
-	public long getPubYear() {
-		return pubYear;
+	public long getPyear() {
+		return pyear;
 	}
 
-	public void setPubYear(long pubYear) {
-		this.pubYear = pubYear;
+	public void setPyear(long pyear) {
+		this.pyear = pyear;
 	}
 
 	public long getIsbn() {

@@ -17,11 +17,6 @@ import com.example.web.UserDetailServiceImpl;
 @Configuration
 public class WebSecurityConfig {
 
-	/*
-	 * private static final AnthPathRequestMatcher[] WHITE_LIST_URLS = { new
-	 * AnthPathRequestMatcher("/h2-console") }
-	 */
-
 	@Bean
 	public SecurityFilterChain configure(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests(authorizeRequest -> authorizeRequest
