@@ -8,7 +8,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.SequenceGenerator;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -16,8 +15,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Category {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "category_seq")
-    @SequenceGenerator(name = "category_seq", sequenceName = "category_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	private String name;
 
